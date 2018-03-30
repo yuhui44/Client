@@ -16,7 +16,21 @@ export function userLogin(data) {
     method: 'post',
     data
   })
-}
+};
+//用户退出登录
+export function userLogout() {
+  return fetch({
+    url: '/api/logout',
+    method: 'post'
+  })
+};
+// 用户状态查询
+export function userStatus() {
+  return fetch({
+    url: '/api/userStatus',
+    method: 'get'
+  })
+};
 
 
 

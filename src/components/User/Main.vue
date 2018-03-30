@@ -1,113 +1,61 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
-          Core Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
-          Forum
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
-          Community Chat
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
-          Twitter
-        </a>
-      </li>
-      <br>
-      <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
-          Docs for This Template
-        </a>
-      </li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
-          vue-router
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
-          vuex
-        </a>
-      </li>
-      <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
-          vue-loader
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
-          awesome-vue
-        </a>
-      </li>
-    </ul>
+  <div id="showMain">
+    <div id="headerWrapper">
+      <header class="header">
+        <div class="container">
+          <div id="headerLogo">
+            <img src="https://jwc.scnu.edu.cn/logo/logo_school.png">
+          </div>
+          <div id="userStatus">
+            <user-status></user-status>
+          </div>
+        </div>
+      </header>
+    </div>
+    <div id="mainContent">
+    </div>
   </div>
 </template>
 
 <script>
+//引入用户状态组件
+import UserStatus from "@/components/Common/UserStatus";
+//导出组件
 export default {
-  name: 'Main',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  // name: 'Main',
+  components: {
+    "user-status": UserStatus
+  },
+  data() {
+    return {};
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+<style lang="stylus" scoped>
+#showMain
+  background-color #000
+  #headerWrapper
+    .header
+      height 60px
+      background-color #fff
+      color #fff
+      top 0
+      left 0
+      width 100%
+      line-height 60px
+      position relative
+      .container
+        width 1000px
+        margin 0 auto
+        #headerLogo
+          float left
+          img
+            heigth 50px
+        #userStatus
+          float right
+      @media (max-width: 1000px)
+        .container
+          width 100%
 </style>

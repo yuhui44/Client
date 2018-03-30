@@ -1,14 +1,17 @@
 <template>
   <div>
-    <el-button icon="el-icon-i-regist" @click="registerDialogVisible=true">注册</el-button>
-    <el-button icon="el-icon-i-login" @click="loginDialogVisible=true">登录</el-button>
-    <el-dropdown>
-      <el-button icon="el-icon-i-user">yuhui44
-        <i class="el-icon-user el-icon-right"></i>
+    <el-button size="medium" icon="el-icon-i-regist" @click="registerDialogVisible=true" v-if="showLoginButton">注册</el-button>
+    <el-button size="medium" icon="el-icon-i-login" @click="loginDialogVisible=true" v-if="showLoginButton">登录</el-button>
+    <el-dropdown v-if="showLogoutButton">
+      <el-button size="medium" icon="el-icon-i-user">{{username}}
+        <i class="el-icon-arrow-down el-icon--right"></i>
       </el-button>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>个人中心</el-dropdown-item>
-        <el-dropdown-item>退出登录</el-dropdown-item>
+        <el-dropdown-item @click.native="goToUserCenter()">
+          用户中心
+          <!-- <router-link to="/user">用户中心</router-link> -->
+        </el-dropdown-item>
+        <el-dropdown-item @click.native="logoutSubmit()">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     <!-- 注册用户弹出框 -->
@@ -32,7 +35,6 @@
         </el-form-item>
         <el-form-item class="floatRight">
           <el-button type="primary" @click="registerSubmit()" style="width: 260px;">注册</el-button>
-          <!-- <el-button type="info" @click="registerFormVisible = false, loginFormVisible = true">登录</el-button> -->
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -56,7 +58,7 @@
 </template>
 
 <script>
-import { userRegister, userLogin } from "@/axios/api";
+import { userRegister, userLogin, userLogout, userStatus } from "@/axios/api";
 export default {
   data() {
     //验证注册用户名
@@ -79,7 +81,7 @@ export default {
         callback(new Error("请输入密码"));
       } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/.test(value)) {
         callback(new Error("必须包含字母和数字！"));
-      } else if(!/^.{8,20}$/.test(value)) {
+      } else if (!/^.{8,20}$/.test(value)) {
         callback(new Error("至少8个字符！"));
       } else {
         this.$refs.registerForm.validataField("checkPassword");
@@ -100,7 +102,13 @@ export default {
     var validataAccount = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入用户名或邮箱"));
-      } else if (((!/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}$/.test(value)) || (/^[0-9]*$/.test(value))) && !/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(value)) {
+      } else if (
+        (!/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]{4,20}$/.test(value) ||
+          /^[0-9]*$/.test(value)) &&
+        !/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(
+          value
+        )
+      ) {
         callback(new Error("格式有误！"));
       } else {
         callback();
@@ -112,7 +120,7 @@ export default {
         callback(new Error("请输入密码"));
       } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/.test(value)) {
         callback(new Error("必须包含字母和数字！"));
-      } else if(!/^.{8,20}$/.test(value)) {
+      } else if (!/^.{8,20}$/.test(value)) {
         callback(new Error("至少8个字符！"));
       } else {
         callback();
@@ -154,11 +162,18 @@ export default {
         account: [
           { required: true, validator: validataAccount, trigger: "blur" }
         ],
-        password: [
-          { required: true, validator: validataPass3, triger: "blur" }
-        ]
-      }
+        password: [{ required: true, validator: validataPass3, triger: "blur" }]
+      },
+      //显示注册、登录按钮
+      showLoginButton: false,
+      //显示个人中心、退出
+      showLogoutButton: false,
+      //用户名
+      username: ''
     };
+  },
+  mounted() {
+    this.getUserStatus();
   },
   methods: {
     registerSubmit() {
@@ -168,7 +183,9 @@ export default {
         password: this.registerForm.password
       })
         .then(res => {
+          this.registerDialogVisible = false;
           console.log(res, "请求成功");
+          this.getUserStatus();
         })
         .catch(err => {
           console.log(err, "请求失败");
@@ -180,12 +197,50 @@ export default {
         password: this.loginForm.password
       })
         .then(res => {
+          this.loginDialogVisible = false;
           console.log(res, "请求成功");
+          this.getUserStatus();
         })
         .catch(err => {
           console.log(err, "请求失败");
         });
+    },
+    logoutSubmit() {
+      userLogout()
+        .then(res => {
+          console.log(res, "请求成功");
+          this.getUserStatus();
+        })
+        .catch(err => {
+          console.log(err, "请求失败");
+          this.$message({
+            message: "退出失败，请稍后重试。",
+            type: "error"
+          });
+        });
+    },
+    getUserStatus() {
+      userStatus()
+        .then(res => {
+          console.log(res, "请求成功");
+          this.username = res.data.username;
+          this.showLoginButton = !res.data.isLogin;
+          this.showLogoutButton = res.data.isLogin;
+        })
+        .catch(err => {
+          console.log(err, "请求错误");
+          this.$message("后端服务异常，请与管理员联系。");
+        });
+    },
+    goToUserCenter() {
+      this.$router.push({path: '/user'});
+      console.log('111');
     }
   }
 };
 </script>
+
+<style lang="stylus" scoped>
+.el-dropdown-menu
+  margin-top 0px
+</style>

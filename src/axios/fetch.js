@@ -44,34 +44,34 @@ export default function fetch(options) {
               message: res.data.msg,
               type: 'success'
             });
+            //success with html message
           } else if (res.data.code == 3) {
             Message({
               message: res.data.msg,
               type: 'success',
               dangerouslyUseHTMLString: true
             })
-          }
-        }
-        return res;
-      },
-      error => {
-        console.log(error.response);
-        if (error.response.data) {
-          //warning with message
-          if (error.response.data.code === 4) {
+            //warning with message
+          } else if (res.data.code == 4) {
             Message({
-              message: error.response.data.msg,
+              message: res.data.msg,
               type: 'warning'
             });
             //warning with html message
-          } else if (error.response.data.code === 5) {
+          } else if (res.data.code === 5) {
             Message({
               message: error.response.data.msg,
               type: 'warning',
               dangerouslyUseHTMLString: true
             });
-            //error with message
-          } else if (error.response.data.code === 6) {
+          }
+        }
+        return res;
+      },
+      error => {
+        if (error.response.data) {
+          //error with message
+          if (error.response.data.code === 6) {
             Message({
               message: error.response.data.msg,
               type: 'error'

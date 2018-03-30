@@ -10,6 +10,9 @@ import App from './App'
 import router from './router'
 import '@/assets/icon/iconfont.css'
 
+// 引入store
+import store from './store';
+
 Vue.config.productionTip = false;
 //开启debug模式
 Vue.config.debug = true;
@@ -31,6 +34,7 @@ Vue.use(ElementUI);
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

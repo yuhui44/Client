@@ -9,9 +9,6 @@ import ShowMain from '@/components/Show/Main';
 //用户后台
 //用户后台框架
 import UserMain from '@/components/User/Main';
-//管理后台
-//管理后台框架
-import AdminMain from '@/components/Admin/Main';
 
 //挂载router实例
 Vue.use(Router)
@@ -31,10 +28,10 @@ export default new Router({
       path: '/user',
       component: UserMain
     },
-    {
-      path: '/admin',
-      component: AdminMain
-    },
+    // {
+    //   path: '/admin',
+    //   component: AdminMain
+    // },
     // {
     //   path: '/',
     //   // name: 'HelloWorld',
