@@ -11,10 +11,17 @@ export default {
 </script>
 
 <style lang="stylus">
+
+#app
+  height: 100%;
+  background-color: #eee;
+
 // <!--这里是对于使用reset.css之后的一些自定义的默认的css初始化-->
 // <!--字体是一些移动端比较流行的字体,所以这里使用-->
 // <!--其他都是为了方便开发,避免css的属性继承影响模块的代码-->
 body, html {
+  margin: 0;
+  height: 100%;
   line-height: 1;
   font-weight: 200;
   // <!--设置一些移动端的常用的字体-->

@@ -31,6 +31,76 @@ export function userStatus() {
     method: 'get'
   })
 };
+// 获得用户信息
+export function getUserInfo() {
+  return fetch({
+    url: '/api/userInfo',
+    method: 'get'
+  })
+};
+//修改用户信息
+export function postUserInfo(data) {
+  return fetch({
+    url: '/api/userInfo',
+    method: 'post',
+    data
+  })
+};
+// 发送验证邮件
+export function resendEmail() {
+  return fetch({
+    url: '/api/resendEmail',
+    method: 'get'
+  })
+};
+//对验证邮件链接进行验证
+export function checkEmailToken(data) {
+  return fetch({
+    url: '/api/checkEmailToken',
+    method: 'post',
+    data
+  })
+}
+// 修改用户密码
+export function changePass(data) {
+  return fetch({
+    url: '/api/changePass',
+    method: 'post',
+    data
+  })
+};
+// 修改邮箱
+export function changeEmail(data) {
+  return fetch({
+    url: '/api/changeEmail',
+    method: 'post',
+    data
+  })
+}
+// 忘记密码
+export function forgetPass(data) {
+  return fetch({
+    url: '/api/forgetPass',
+    method: 'post',
+    data
+  })
+}
+// 重置密码1
+export function resetPass1(data) {
+  return fetch({
+    url: '/api/resetPass1',
+    method: 'post',
+    data
+  })
+}
+// 重置密码2
+export function resetPass2(data) {
+  return fetch({
+    url: '/api/resetPass2',
+    method: 'post',
+    data
+  })
+}
 
 
 

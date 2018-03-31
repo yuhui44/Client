@@ -15,8 +15,8 @@
       </el-dropdown-menu>
     </el-dropdown>
     <!-- 注册用户弹出框 -->
-    <el-dialog title="注册" :visible.sync="registerDialogVisible" width="300px">
-      <el-form :model="registerForm" :rules="registerFormRules" ref="registerForm">
+    <el-dialog title="注册" :visible.sync="registerDialogVisible" width="300px" :append-to-body=true>
+      <el-form :model="registerForm" status-icon :rules="registerFormRules" ref="registerForm">
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input v-model="registerForm.username" placeholder="用户名"></el-input>
@@ -39,8 +39,8 @@
       </el-form>
     </el-dialog>
     <!-- 登录用户弹出框 -->
-    <el-dialog title="登录" :visible.sync="loginDialogVisible" width="300px">
-      <el-form :model="loginForm" :rules="loginFormRules" ref="loginForm">
+    <el-dialog title="登录" :visible.sync="loginDialogVisible" width="300px" :append-to-body=true>
+      <el-form :model="loginForm" status-icon :rules="loginFormRules" ref="loginForm">
         <!-- 用户名或邮箱 -->
         <el-form-item prop="account">
           <el-input v-model="loginForm.account" placeholder="用户名或邮箱"></el-input>
@@ -50,7 +50,22 @@
           <el-input v-model="loginForm.password" type="password" placeholder="密码"></el-input>
         </el-form-item>
         <el-form-item>
+          <el-button size="mini" @click="showResetPass()" style="float: right;">忘记密码</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="loginSubmit()" style="width: 260px;">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+    <!-- 重置密码弹出框 -->
+    <el-dialog title="重置密码" :visible.sync="resetPassDialogVisible" width="300px" :append-to-body=true>
+      <el-form :model="resetPassForm" status-icon :rules="resetPassFormRules" ref="resetPassForm">
+        <!-- 用户名或邮箱 -->
+        <el-form-item prop="account">
+          <el-input v-model="resetPassForm.account" placeholder="用户名或邮箱"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="resetPassSubmit()" style="width: 260px;">发送重置密码邮件</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -58,7 +73,7 @@
 </template>
 
 <script>
-import { userRegister, userLogin, userLogout, userStatus } from "@/axios/api";
+import { userRegister, userLogin, userLogout, userStatus, forgetPass } from "@/axios/api";
 export default {
   data() {
     //验证注册用户名
@@ -84,7 +99,7 @@ export default {
       } else if (!/^.{8,20}$/.test(value)) {
         callback(new Error("至少8个字符！"));
       } else {
-        this.$refs.registerForm.validataField("checkPassword");
+        this.$refs.registerForm.validateField("checkPassword");
         callback();
       }
     };
@@ -169,7 +184,16 @@ export default {
       //显示个人中心、退出
       showLogoutButton: false,
       //用户名
-      username: ''
+      username: "",
+      resetPassDialogVisible: false,
+      resetPassForm: {
+        account: ''
+      },
+      resetPassFormRules: {
+        account: [
+          { required: true, validator: validataAccount, trigger: "blur" }
+        ]
+      }
     };
   },
   mounted() {
@@ -177,21 +201,32 @@ export default {
   },
   methods: {
     registerSubmit() {
-      userRegister({
-        username: this.registerForm.username,
-        email: this.registerForm.email,
-        password: this.registerForm.password
-      })
-        .then(res => {
-          this.registerDialogVisible = false;
-          console.log(res, "请求成功");
-          this.getUserStatus();
-        })
-        .catch(err => {
-          console.log(err, "请求失败");
-        });
+      this.$refs.registerForm.validate(valid => {
+        if (valid) {
+          userRegister({
+            username: this.registerForm.username,
+            email: this.registerForm.email,
+            password: this.registerForm.password
+          })
+            .then(res => {
+              this.registerDialogVisible = false;
+              console.log(res, "请求成功");
+              this.getUserStatus();
+            })
+            .catch(err => {
+              console.log(err, "请求失败");
+            });
+        } else {
+          this.$message({
+            message: "请完成填写注册信息",
+            type: "error"
+          });
+        }
+      });
     },
     loginSubmit() {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
       userLogin({
         account: this.loginForm.account,
         password: this.loginForm.password
@@ -204,6 +239,13 @@ export default {
         .catch(err => {
           console.log(err, "请求失败");
         });
+        } else {
+          this.$message({
+            message: '请完整填写登录信息',
+            type: 'error'
+          })
+        }
+      });
     },
     logoutSubmit() {
       userLogout()
@@ -233,14 +275,39 @@ export default {
         });
     },
     goToUserCenter() {
-      this.$router.push({path: '/user'});
-      console.log('111');
+      this.$router.push({ path: "/user" });
+      console.log("111");
+    },
+    showResetPass(){
+      this.loginDialogVisible = false;
+      this.resetPassDialogVisible = true;
+    },
+    resetPassSubmit() {
+      this.$refs.resetPassForm.validate(valid => {
+        if (valid) {
+      forgetPass(this.resetPassForm)
+        .then(res => {
+          this.resetPassDialogVisible = false;
+          console.log(res, "请求成功");
+        })
+        .catch(err => {
+          console.log(err, "请求失败");
+        });
+        } else {
+          this.$message({
+            message: '请填写账号信息',
+            type: 'error'
+          })
+        }
+      });
+
     }
   }
 };
 </script>
 
 <style lang="stylus" scoped>
-.el-dropdown-menu
-  margin-top 0px
+.el-dropdown-menu {
+  margin-top: 0px;
+}
 </style>
