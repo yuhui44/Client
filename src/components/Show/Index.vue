@@ -1,5 +1,5 @@
 <template>
   <div>
-    <h1>邮箱验证</h1>
+    <h1>主页</h1>
   </div>
 </template>
