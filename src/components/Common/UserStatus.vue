@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <el-button size="medium" icon="el-icon-i-regist" @click="registerDialogVisible=true" v-if="showLoginButton">注册</el-button>
-    <el-button size="medium" icon="el-icon-i-login" @click="loginDialogVisible=true" v-if="showLoginButton">登录</el-button>
+  <div class="user-status">
+    <el-button size="medium" icon="el-icon-yuhui44-regist" @click="registerDialogVisible=true" v-if="showLoginButton">注册</el-button>
+    <el-button size="medium" icon="el-icon-yuhui44-login" @click="loginDialogVisible=true" v-if="showLoginButton">登录</el-button>
     <el-dropdown v-if="showLogoutButton">
-      <el-button size="medium" icon="el-icon-i-user">{{username}}
+      <el-button size="medium" icon="el-icon-yuhui44-user">{{username}}
         <i class="el-icon-arrow-down el-icon--right"></i>
       </el-button>
       <el-dropdown-menu slot="dropdown">
@@ -73,7 +73,13 @@
 </template>
 
 <script>
-import { userRegister, userLogin, userLogout, userStatus, forgetPass } from "@/axios/api";
+import {
+  userRegister,
+  userLogin,
+  userLogout,
+  userStatus,
+  forgetPass
+} from "@/axios/api";
 export default {
   data() {
     //验证注册用户名
@@ -187,7 +193,7 @@ export default {
       username: "",
       resetPassDialogVisible: false,
       resetPassForm: {
-        account: ''
+        account: ""
       },
       resetPassFormRules: {
         account: [
@@ -227,23 +233,23 @@ export default {
     loginSubmit() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-      userLogin({
-        account: this.loginForm.account,
-        password: this.loginForm.password
-      })
-        .then(res => {
-          this.loginDialogVisible = false;
-          console.log(res, "请求成功");
-          this.getUserStatus();
-        })
-        .catch(err => {
-          console.log(err, "请求失败");
-        });
+          userLogin({
+            account: this.loginForm.account,
+            password: this.loginForm.password
+          })
+            .then(res => {
+              this.loginDialogVisible = false;
+              console.log(res, "请求成功");
+              this.getUserStatus();
+            })
+            .catch(err => {
+              console.log(err, "请求失败");
+            });
         } else {
           this.$message({
-            message: '请完整填写登录信息',
-            type: 'error'
-          })
+            message: "请完整填写登录信息",
+            type: "error"
+          });
         }
       });
     },
@@ -278,29 +284,28 @@ export default {
       this.$router.push({ path: "/user" });
       console.log("111");
     },
-    showResetPass(){
+    showResetPass() {
       this.loginDialogVisible = false;
       this.resetPassDialogVisible = true;
     },
     resetPassSubmit() {
       this.$refs.resetPassForm.validate(valid => {
         if (valid) {
-      forgetPass(this.resetPassForm)
-        .then(res => {
-          this.resetPassDialogVisible = false;
-          console.log(res, "请求成功");
-        })
-        .catch(err => {
-          console.log(err, "请求失败");
-        });
+          forgetPass(this.resetPassForm)
+            .then(res => {
+              this.resetPassDialogVisible = false;
+              console.log(res, "请求成功");
+            })
+            .catch(err => {
+              console.log(err, "请求失败");
+            });
         } else {
           this.$message({
-            message: '请填写账号信息',
-            type: 'error'
-          })
+            message: "请填写账号信息",
+            type: "error"
+          });
         }
       });
-
     }
   }
 };
@@ -309,5 +314,9 @@ export default {
 <style lang="stylus" scoped>
 .el-dropdown-menu {
   margin-top: 0px;
+}
+
+.user-status {
+  margin-right: 5px;
 }
 </style>

@@ -83,6 +83,11 @@ export default function fetch(options) {
               type: 'error',
               dangerouslyUseHTMLString: true
             });
+          } else if (error.response.data.code === 9) {
+            Message({
+              message: error.response.data.msg,
+              type: 'error'
+            });
           }
         }
         return Promise.reject(error);

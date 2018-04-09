@@ -10,12 +10,14 @@
       <el-form-item label="邮箱">
         <span class="el-checkbox__label">{{email}}</span>
       </el-form-item>
+      <el-form-item label="注册时间">
+        <!-- <span class="el-checkbox__label">{{createTime}}</span> -->
+        <el-date-picker disabled v-model="createTime" type="datetime">
+        </el-date-picker>
+      </el-form-item>
       <el-form-item label="邮箱状态">
         <span class="el-checkbox__label">{{ emailConfirmation ? '邮箱已验证' : '邮箱未验证，请尽快验证（如果长时间未收到验证邮件，请修改邮箱）'}}</span>
         <el-button plain size="small" v-if="!emailConfirmation" @click="resendEmail2()">重新发送验证邮件</el-button>
-      </el-form-item>
-      <el-form-item label="注册时间">
-        <span class="el-checkbox__label">{{createTime}}</span>
       </el-form-item>
       <el-form-item label="用户名" prop="username">
         <el-input v-model="userInfoForm.username"></el-input>

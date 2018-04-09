@@ -18,24 +18,28 @@
         <div id="userMenu">
           <el-menu :default-active="activeIndex" class="el-menu-vertical-demo" :collapse="isCollapse" v-bind:router="true">
             <el-menu-item index="/user">
-              <i class="el-icon-location"></i>
+              <i class="el-icon-yuhui44-index"></i>
               <span slot="title">我的主页</span>
             </el-menu-item>
             <el-menu-item index="/user/info">
-              <i class="el-icon-menu"></i>
+              <i class="el-icon-yuhui44-info"></i>
               <span slot="title">我的信息</span>
             </el-menu-item>
             <el-menu-item index="/user/safe">
-              <i class="el-icon-menu"></i>
+              <i class="el-icon-yuhui44-safe"></i>
               <span slot="title">账户安全</span>
             </el-menu-item>
             <el-menu-item index="/user/info">
-              <i class="el-icon-document"></i>
+              <i class="el-icon-yuhui44-sell"></i>
               <span slot="title">我的转让</span>
             </el-menu-item>
             <el-menu-item index="/user/info">
-              <i class="el-icon-setting"></i>
+              <i class="el-icon-yuhui44-need"></i>
               <span slot="title">我的需求</span>
+            </el-menu-item>
+            <el-menu-item index="/user/users">
+              <i class="el-icon-yuhui44-users"></i>
+              <span slot="title">所有用户</span>
             </el-menu-item>
             <el-menu-item index="5" @click="isCollapse = !isCollapse">
               <i class="el-icon-refresh"></i>
@@ -66,16 +70,16 @@ export default {
     };
   },
   mounted() {
-    this.isCollapse = document.documentElement.clientWidth < 1000;
+    this.isCollapse = document.documentElement.clientWidth < 1010;
     console.log(this.isCollapse);
     // const that = this;
     window.onresize = () => {
-      this.isCollapse = document.documentElement.clientWidth < 1000;
+      this.isCollapse = document.documentElement.clientWidth < 1010;
     };
   },
   computed: {
-    activeIndex () {
-      return '/'+this.$route.matched[0].path.split('/')[1];
+    activeIndex() {
+      return "/" + this.$route.matched[0].path.split("/")[1];
     }
   }
 };
@@ -122,7 +126,7 @@ export default {
   }
 }
 
-@media (max-width: 570px) {
+@media (max-width: 550px) {
   #text-logo {
     display: none;
   }
@@ -145,7 +149,7 @@ export default {
   // height: calc(100% - 100px);
   transition: 1s;
   transition-timing-function: ease-out;
-  margin-left: 180px;
+  // margin-right: 180px;
   width: calc(100% - 220px);
   background-color: #fff;
   float: right;
@@ -155,12 +159,27 @@ export default {
 }
 
 .content-thin {
-  margin-left: 65px;
-  width: calc(100% - 70px);
-  padding: 20px 0px 20px 5px;
+
+  width: calc(100% - 60px);
+  margin-right: 5px;
+  // width: 100%;
+  padding: 20px 5px;
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 160px;
+}
+
+.el-menu--collapse {
+  width: 40px;
+}
+
+.el-menu-item, .el-submenu__title {
+  height: 50px;
+  line-height: 50px;
+}
+
+.el-menu--collapse .el-menu-item {
+  margin-left: -10px;
 }
 </style>

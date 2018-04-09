@@ -112,7 +112,7 @@ export default {
   }
 }
 
-@media (max-width: 570px) {
+@media (max-width: 550px) {
   #text-logo {
     display: none;
   }
@@ -128,15 +128,30 @@ export default {
 
 .content {
   // height: calc(100% - 100px);
-  width: 100%;
+  width: calc(100% - 40px);
   background-color: #fff;
   float: left;
   margin-top: 80px;
   margin-bottom: 20px;
+  // margin-left: 5px;
   padding: 20px;
+}
+
+@media (max-width: 1010px) {
+  .content {
+    margin-left: 5px;
+  width: calc(100% - 50px);
+  }
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 160px;
+}
+
+@media (max-width: 354px) {
+  #headerLogo img {
+    height: 30px;
+    margin-top: 15px;
+  }
 }
 </style>

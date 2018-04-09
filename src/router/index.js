@@ -14,7 +14,8 @@ import ResetPass from '@/components/Show/ResetPass';
 import UserMain from '@/components/User/Main';
 import UserIndex from '@/components/User/Index';
 import UserInfo from '@/components/User/Info';
-import UserSafe from '@/components/User/Safe'
+import UserSafe from '@/components/User/Safe';
+import UsersInfo from '@/components/User/Users';
 
 //挂载router实例
 Vue.use(Router)
@@ -59,6 +60,10 @@ export default new Router({
         {
           path: 'safe',
           component: UserSafe
+        },
+        {
+          path: 'users',
+          component: UsersInfo
         }
       ]
     }
