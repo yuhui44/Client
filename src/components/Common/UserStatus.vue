@@ -78,7 +78,8 @@ import {
   userLogin,
   userLogout,
   userStatus,
-  forgetPass
+  forgetPass,
+  resendEmail
 } from "@/axios/api";
 export default {
   data() {
@@ -218,6 +219,13 @@ export default {
               this.registerDialogVisible = false;
               console.log(res, "请求成功");
               this.getUserStatus();
+              resendEmail()
+                .then(res => {
+                  console.log(res, "请求成功");
+                })
+                .catch(err => {
+                  console.log(err, "请求失败");
+                });
             })
             .catch(err => {
               console.log(err, "请求失败");

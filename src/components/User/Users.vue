@@ -23,7 +23,7 @@
               <span>{{ props.row.wechat || 'null' }}</span>
             </el-form-item>
             <el-form-item label="注册时间">
-              <span>{{ props.row.createTime || 'null' }}</span>
+              <span>{{ new Date(props.row.createTime).toLocaleString() || 'null' }}</span>
             </el-form-item>
             <el-form-item label="邮件提醒">
               <span>{{ props.row.message ? '是' : '否' }}</span>
@@ -102,10 +102,37 @@ import { getUsersInfo, postUserInfo } from "@/axios/api";
 //导出组件
 export default {
   data() {
+    //验证用户名
+    var validataUsername = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入用户名"));
+      } else if (!/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(value)) {
+        callback(new Error("不可包含特殊符号！"));
+      } else if (/^[0-9]+$/.test(value)) {
+        callback(new Error("不可由纯数字组成"));
+      } else if (!/^.{4,20}$/.test(value)) {
+        callback(new Error("至少4个字符！"));
+      } else {
+        callback();
+      }
+    };
     return {
       usersInfo: [],
       userInfoForm: {},
-      userInfoDialogVisible: false
+      userInfoDialogVisible: false,
+      userInfoFormRules: {
+        username: [
+          { required: true, validator: validataUsername, trigger: "blur" }
+        ],
+        email: [
+          { required: true, message: "请输入邮箱地址", trigger: "blur" },
+          {
+            type: "email",
+            message: "请输入正确的邮箱地址",
+            trigger: "blur,change"
+          }
+        ]
+      }
     };
   },
   mounted() {},

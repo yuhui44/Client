@@ -11,9 +11,9 @@
         <span class="el-checkbox__label">{{email}}</span>
       </el-form-item>
       <el-form-item label="注册时间">
-        <!-- <span class="el-checkbox__label">{{createTime}}</span> -->
-        <el-date-picker disabled v-model="createTime" type="datetime">
-        </el-date-picker>
+        <span class="el-checkbox__label">{{createTime}}</span>
+        <!-- <el-date-picker disabled v-model="createTime" type="datetime">
+        </el-date-picker> -->
       </el-form-item>
       <el-form-item label="邮箱状态">
         <span class="el-checkbox__label">{{ emailConfirmation ? '邮箱已验证' : '邮箱未验证，请尽快验证（如果长时间未收到验证邮件，请修改邮箱）'}}</span>
@@ -93,7 +93,7 @@ export default {
           this.user_id = res.data.user_id || "";
           this.emailConfirmation = res.data.emailConfirmation;
           this.isDisabled = res.data.isDisabled;
-          this.createTime = res.data.createTime || "";
+          this.createTime = new Date(res.data.createTime).toLocaleString() || "";
           this.userInfoForm.username = res.data.username || "";
           this.email = res.data.email || "";
           this.userInfoForm.telephone = res.data.telephone || "";

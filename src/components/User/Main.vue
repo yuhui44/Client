@@ -29,7 +29,7 @@
               <i class="el-icon-yuhui44-safe"></i>
               <span slot="title">账户安全</span>
             </el-menu-item>
-            <el-menu-item index="/user/info">
+            <el-menu-item index="/user/property">
               <i class="el-icon-yuhui44-sell"></i>
               <span slot="title">我的转让</span>
             </el-menu-item>

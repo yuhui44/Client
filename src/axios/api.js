@@ -108,3 +108,29 @@ export function getUsersInfo() {
     method: 'get'
   })
 };
+
+// 获取个人产权信息
+export function getPropertysInfo() {
+  return fetch({
+    url: '/api/propertys',
+    method: 'get'
+  })
+};
+
+// 获产权信息详情
+export function getPropertyInfo(params) {
+  return fetch({
+    url: '/api/property',
+    method: 'get',
+    params
+  })
+};
+
+// 更新产权信息
+export function postPropertyInfo(data) {
+  return fetch({
+    url: '/api/property',
+    method: 'post',
+    data
+  })
+};

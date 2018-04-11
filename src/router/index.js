@@ -16,6 +16,7 @@ import UserIndex from '@/components/User/Index';
 import UserInfo from '@/components/User/Info';
 import UserSafe from '@/components/User/Safe';
 import UsersInfo from '@/components/User/Users';
+import UserProperty from '@/components/User/Property';
 
 //挂载router实例
 Vue.use(Router)
@@ -64,6 +65,10 @@ export default new Router({
         {
           path: 'users',
           component: UsersInfo
+        },
+        {
+          path: 'property',
+          component: UserProperty
         }
       ]
     }
