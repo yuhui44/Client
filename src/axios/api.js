@@ -134,3 +134,11 @@ export function postPropertyInfo(data) {
     data
   })
 };
+
+// 管理员获取所有用户产权信息
+export function getAllPropertysInfo() {
+  return fetch({
+    url: '/api/allPropertys',
+    method: 'get'
+  })
+}

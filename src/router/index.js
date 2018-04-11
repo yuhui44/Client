@@ -15,8 +15,9 @@ import UserMain from '@/components/User/Main';
 import UserIndex from '@/components/User/Index';
 import UserInfo from '@/components/User/Info';
 import UserSafe from '@/components/User/Safe';
-import UsersInfo from '@/components/User/Users';
+import UserInfos from '@/components/User/Infos';
 import UserProperty from '@/components/User/Property';
+import UserPropertys from '@/components/User/Propertys';
 
 //挂载router实例
 Vue.use(Router)
@@ -63,12 +64,16 @@ export default new Router({
           component: UserSafe
         },
         {
-          path: 'users',
-          component: UsersInfo
+          path: 'infos',
+          component: UserInfos
         },
         {
           path: 'property',
           component: UserProperty
+        },
+        {
+          path: 'propertys',
+          component: UserPropertys
         }
       ]
     }

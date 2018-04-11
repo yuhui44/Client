@@ -1,7 +1,6 @@
 <template>
   <div>
-    <el-button @click="editPropertyInfo()">发布新产权</el-button>
-    <el-table :data="propertysInfo" border style="width: 100%">
+    <el-table :data="allPropertysInfo" border style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -11,6 +10,15 @@
             <el-form-item label="产权名">
               <span>{{ props.row.propertyName|| 'null' }}</span>
             </el-form-item>
+            <el-form-item label="发布者ID">
+              <span>{{ props.row.publisher._id || 'null' }}</span>
+            </el-form-item>
+            <el-form-item label="发布者用户名">
+              <span>{{ props.row.publisher.username|| 'null' }}</span>
+            </el-form-item>
+            <el-form-item label="发布者邮箱">
+              <span>{{ props.row.publisher.email|| 'null' }}</span>
+            </el-form-item>
             <el-form-item label="是否发布">
               <span>{{ props.row.isPublish ? '发布中' : '未发布' }}</span>
             </el-form-item>
@@ -18,7 +26,7 @@
               <span>{{ props.row.isSelt ? '已售出' : '出售中' }}</span>
             </el-form-item>
             <el-form-item label="状态">
-              <span>{{ props.row.isDisabled ? '被禁用' : '正常' }}</span>
+              <span>{{ props.row.isDisable ? '被禁用' : '正常' }}</span>
             </el-form-item>
             <el-form-item label="创建时间">
               <span>{{ new Date(props.row.createTime).toLocaleString() || 'null' }}</span>
@@ -34,10 +42,14 @@
       </el-table-column>
       <el-table-column prop="_id" label="产权ID" min-width="210">
       </el-table-column>
-      <el-table-column prop="propertyName" label="产权名" min-width="120">
+      <el-table-column prop="propertyName" label="产权名" min-width="150">
       </el-table-column>
-      <!-- <el-table-column prop="email" label="邮箱" min-width="200">
-      </el-table-column> -->
+      <el-table-column prop="publisher._id" label="发布者ID" min-width="210">
+      </el-table-column>
+      <el-table-column prop="publisher.username" label="发布者用户名" min-width="110">
+      </el-table-column>
+      <el-table-column prop="publisher.email" label="发布者邮箱" min-width="170">
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="50">
         <template slot-scope="scope">
           <el-button @click="editPropertyInfo(scope.row)" type="text" size="small">编辑</el-button>
@@ -62,6 +74,15 @@
         <el-form-item label="是否售出">
           <el-switch v-model="propertyInfoForm.isSelt"></el-switch>
         </el-form-item>
+        <el-form-item label="是否禁用">
+          <el-switch v-model="propertyInfoForm.isDisabled"></el-switch>
+        </el-form-item>
+        <el-form-item label="创建时间" prop="createTime">
+          <el-date-picker v-model="propertyInfoForm.createTime" type="datetime"></el-date-picker>
+        </el-form-item>
+        <el-form-item label="修改时间" prop="editTime">
+          <el-date-picker v-model="propertyInfoForm.editTime" type="datetime"></el-date-picker>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="postPropertyInfo2()">确定</el-button>
         </el-form-item>
@@ -73,7 +94,7 @@
 
 <script>
 import {
-  getPropertysInfo,
+  getAllPropertysInfo,
   getPropertyInfo,
   postPropertyInfo
 } from "@/axios/api";
@@ -81,7 +102,7 @@ import {
 export default {
   data() {
     return {
-      propertysInfo: [],
+      allPropertysInfo: [],
       propertyInfoForm: {},
       propertyInfoDialogVisible: false,
       propertyInfoDialogTitle: "新建或修改产权信息",
@@ -96,14 +117,14 @@ export default {
   },
   mounted() {},
   created() {
-    this.getPropertysInfo2();
+    this.getAllPropertysInfo2();
   },
   methods: {
-    getPropertysInfo2() {
-      getPropertysInfo()
+    getAllPropertysInfo2() {
+      getAllPropertysInfo()
         .then(res => {
           console.log(res, "请求成功");
-          this.propertysInfo = res.data.propertys;
+          this.allPropertysInfo = res.data.propertys;
         })
         .catch(err => {
           console.log(err, "请求错误");
@@ -125,12 +146,7 @@ export default {
             console.log(err, "请求错误");
           });
       } else {
-        this.propertyInfoForm = {
-          isPublish: true,
-          isSelt: false
-        };
-        this.propertyInfoDialogTitle = "新建产权信息";
-        this.propertyInfoDialogVisible = true;
+        console.log("姿势不对哦，参数去哪了？");
       }
     },
     postPropertyInfo2() {
@@ -141,7 +157,7 @@ export default {
               console.log(res, "请求成功");
               this.propertyInfoDialogVisible = false;
               this.propertyInfoForm = {};
-              this.getPropertysInfo2();
+              this.getAllPropertysInfo2();
             })
             .catch(err => {
               console.log(err, "请求错误");

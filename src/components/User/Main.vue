@@ -37,13 +37,13 @@
               <i class="el-icon-yuhui44-need"></i>
               <span slot="title">我的需求</span>
             </el-menu-item>
-            <el-menu-item index="/user/users">
+            <el-menu-item index="/user/infos">
               <i class="el-icon-yuhui44-users"></i>
               <span slot="title">所有用户</span>
             </el-menu-item>
-            <el-menu-item index="5" @click="isCollapse = !isCollapse">
+            <el-menu-item index="/user/propertys">
               <i class="el-icon-refresh"></i>
-              <span slot="title">展开收起</span>
+              <span slot="title">所有产权</span>
             </el-menu-item>
           </el-menu>
         </div>
