@@ -134,7 +134,7 @@ export default {
   margin-top: 80px;
   margin-bottom: 20px;
   // margin-left: 5px;
-  padding: 20px;
+  padding: 15px;
 }
 
 @media (max-width: 1010px) {
@@ -148,7 +148,7 @@ export default {
   width: 160px;
 }
 
-@media (max-width: 354px) {
+@media (max-width: 330px) {
   #headerLogo img {
     height: 30px;
     margin-top: 15px;

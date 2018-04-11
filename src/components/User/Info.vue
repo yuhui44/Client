@@ -93,7 +93,7 @@ export default {
           this.user_id = res.data.user_id || "";
           this.emailConfirmation = res.data.emailConfirmation;
           this.isDisabled = res.data.isDisabled;
-          this.createTime = new Date(res.data.createTime).toLocaleString() || "";
+          this.createTime = new Date(res.data.createTime).toLocaleString('chinese',{hour12:false}) || "";
           this.userInfoForm.username = res.data.username || "";
           this.email = res.data.email || "";
           this.userInfoForm.telephone = res.data.telephone || "";

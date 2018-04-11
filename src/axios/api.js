@@ -142,3 +142,11 @@ export function getAllPropertysInfo() {
     method: 'get'
   })
 }
+
+// 获取首页产权列表
+export function getIndexPropertysInfo() {
+  return fetch({
+    url: '/api/indexPropertys',
+    method: 'get'
+  })
+}

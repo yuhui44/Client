@@ -182,4 +182,11 @@ export default {
 .el-menu--collapse .el-menu-item {
   margin-left: -10px;
 }
+
+@media (max-width: 330px) {
+  #headerLogo img {
+    height: 30px;
+    margin-top: 15px;
+  }
+}
 </style>

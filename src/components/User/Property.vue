@@ -21,10 +21,10 @@
               <span>{{ props.row.isDisabled ? '被禁用' : '正常' }}</span>
             </el-form-item>
             <el-form-item label="创建时间">
-              <span>{{ new Date(props.row.createTime).toLocaleString() || 'null' }}</span>
+              <span>{{ new Date(props.row.createTime).toLocaleString('chinese',{hour12:false}) || 'null' }}</span>
             </el-form-item>
             <el-form-item label="编辑时间">
-              <span>{{ new Date(props.row.editTime).toLocaleString() || 'null' }}</span>
+              <span>{{ new Date(props.row.editTime).toLocaleString('chinese',{hour12:false}) || 'null' }}</span>
             </el-form-item>
             <el-form-item label="摘要">
               <span>{{ props.row.summary || 'null' }}</span>

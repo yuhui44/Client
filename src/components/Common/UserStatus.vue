@@ -327,4 +327,12 @@ export default {
 .user-status {
   margin-right: 5px;
 }
+
+@media (max-width: 700px) {
+  .el-button {
+    padding: 7px 15px;
+    font-size: 12px;
+    border-radius: 3px;
+  }
+}
 </style>

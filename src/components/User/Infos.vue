@@ -23,7 +23,7 @@
               <span>{{ props.row.wechat || 'null' }}</span>
             </el-form-item>
             <el-form-item label="注册时间">
-              <span>{{ new Date(props.row.createTime).toLocaleString() || 'null' }}</span>
+              <span>{{ new Date(props.row.createTime).toLocaleString('chinese',{hour12:false}) || 'null' }}</span>
             </el-form-item>
             <el-form-item label="邮件提醒">
               <span>{{ props.row.message ? '是' : '否' }}</span>
