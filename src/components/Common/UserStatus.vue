@@ -59,7 +59,7 @@
     </el-dialog>
     <!-- 重置密码弹出框 -->
     <el-dialog title="重置密码" :visible.sync="resetPassDialogVisible" width="300px" :append-to-body=true>
-      <el-form :model="resetPassForm" status-icon :rules="resetPassFormRules" ref="resetPassForm">
+      <el-form :model="resetPassForm" status-icon :rules="resetPassFormRules" ref="resetPassForm" @submit.native.prevent>
         <!-- 用户名或邮箱 -->
         <el-form-item prop="account">
           <el-input v-model="resetPassForm.account" placeholder="用户名或邮箱"></el-input>

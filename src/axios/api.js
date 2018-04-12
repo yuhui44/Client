@@ -144,9 +144,55 @@ export function getAllPropertysInfo() {
 }
 
 // 获取首页产权列表
-export function getIndexPropertysInfo() {
+export function getIndexPropertysInfo(params) {
   return fetch({
     url: '/api/indexPropertys',
+    method: 'get',
+    params
+  })
+}
+
+// 获取首页产权详情
+export function getIndexPropertyInfo(params) {
+  return fetch({
+    url: '/api/indexProperty',
+    method: 'get',
+    params
+  })
+}
+
+// 发送产权意向
+export function postIndexWantInfo(data) {
+  return fetch({
+    url: '/api/indexWant',
+    method: 'post',
+    data
+  })
+}
+
+// 获取收到的意向
+export function getWantsInfo(params) {
+  return fetch({
+    url: '/api/wants',
+    method: 'get',
+    params
+  })
+}
+
+// 获取发出的意向
+export function getNeedsInfo() {
+  return fetch({
+    url: '/api/needs',
     method: 'get'
   })
 }
+
+// 管理员获取所有的意向
+export function getAllWantsInfo() {
+  return fetch({
+    url: '/api/AllWants',
+    method: 'get'
+  })
+}
+
+

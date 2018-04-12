@@ -33,9 +33,13 @@
               <i class="el-icon-yuhui44-sell"></i>
               <span slot="title">我的转让</span>
             </el-menu-item>
-            <el-menu-item index="/user/info">
+            <el-menu-item index="/user/needs">
               <i class="el-icon-yuhui44-need"></i>
-              <span slot="title">我的需求</span>
+              <span slot="title">我的意向</span>
+            </el-menu-item>
+            <el-menu-item index="/user/wants">
+              <i class="el-icon-phone-outline"></i>
+              <span slot="title">意向请求</span>
             </el-menu-item>
             <el-menu-item index="/user/infos">
               <i class="el-icon-yuhui44-users"></i>
@@ -44,6 +48,10 @@
             <el-menu-item index="/user/propertys">
               <i class="el-icon-refresh"></i>
               <span slot="title">所有产权</span>
+            </el-menu-item>
+            <el-menu-item index="/user/allWants">
+              <i class="el-icon-more"></i>
+              <span slot="title">所有意向</span>
             </el-menu-item>
           </el-menu>
         </div>

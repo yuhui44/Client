@@ -9,6 +9,7 @@ import ShowMain from '@/components/Show/Main';
 import ShowIndex from '@/components/Show/Index';
 import ValiEmail from '@/components/Show/ValiEmail';
 import ResetPass from '@/components/Show/ResetPass';
+import ShowProperty from '@/components/Show/Property';
 //用户后台
 //用户后台框架
 import UserMain from '@/components/User/Main';
@@ -18,6 +19,9 @@ import UserSafe from '@/components/User/Safe';
 import UserInfos from '@/components/User/Infos';
 import UserProperty from '@/components/User/Property';
 import UserPropertys from '@/components/User/Propertys';
+import UserWants from '@/components/User/Wants';
+import UserNeeds from '@/components/User/Needs';
+import UserAllWants from '@/components/User/AllWants';
 
 //挂载router实例
 Vue.use(Router)
@@ -44,6 +48,10 @@ export default new Router({
         {
           path: 'resetPass/:token',
           component: ResetPass
+        },
+        {
+          path: 'property/:id',
+          component: ShowProperty
         }
       ]
     },
@@ -74,6 +82,18 @@ export default new Router({
         {
           path: 'propertys',
           component: UserPropertys
+        },
+        {
+          path: 'wants',
+          component: UserWants
+        },
+        {
+          path: 'needs',
+          component: UserNeeds
+        },
+        {
+          path: 'allWants',
+          component: UserAllWants
         }
       ]
     }

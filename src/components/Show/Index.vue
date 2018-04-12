@@ -2,26 +2,26 @@
   <div>
     <!-- 正在加载 -->
     <p class="loading" v-if="isLoading">正在加载产权信息，请稍等...</p>
+    <!-- 加载失败 -->
+    <p class="fail" v-if="isFail">产权信息加载失败，请刷新重试...</p>
     <!-- 产权展示 -->
-    <div class="propertys-list">
+    <div class="propertys-list" v-if="!isLoading && !isFail">
       <!-- 单个商品 -->
       <div class="property-box" v-for="property in propertys" :key="property">
         <div class="property-inbox">
           <div class="property-title">
-            <router-link to="/" :title="property.propertyName">{{property.propertyName}}</router-link>
+            <router-link :to="{ path: 'property/' + property._id }" :title="property.propertyName">{{property.propertyName}}</router-link>
           </div>
           <div class="property-author-time">
             <div class="property-author">
-              <router-link to="/" :title="property.publisher.username">{{property.publisher.username}}</router-link>
+              <router-link :to="{ path: '', query: { userId: property.publisher._id }}" :title="property.publisher.username">{{property.publisher.username}}</router-link>
             </div>
             <p class="property-publish">发表于</p>
             <p class="property-time">{{new Date(property.createTime).toLocaleString('chinese',{hour12:false})}}</p>
           </div>
-          <div class="property-summary">
-            <p>{{property.summary}}</p>
-          </div>
+          <p class="property-summary">{{property.summary}}</p>
           <div class="property-go">
-            <router-link to="/">查看详情
+            <router-link :to="{ path: 'property/' + property._id }">查看详情
               <i class="el-icon-d-arrow-right"></i>
             </router-link>
           </div>
@@ -39,22 +39,34 @@ export default {
   data() {
     return {
       isLoading: true,
-      propertys: {}
+      isFail: false,
+      propertys: {},
+      params: {}
     };
   },
   mounted() {},
   created() {
     this.getIndexPropertysInfo2();
   },
+  watch: {
+    $route: "getIndexPropertysInfo2"
+  },
   methods: {
     getIndexPropertysInfo2() {
-      getIndexPropertysInfo()
+      this.isLoading = true;
+      this.params = {};
+      if (this.$route.query.userId) {
+        this.params.userId = this.$route.query.userId;
+      }
+      getIndexPropertysInfo(this.params)
         .then(res => {
           console.log(res, "请求成功");
           this.propertys = res.data.propertys;
           this.isLoading = false;
         })
         .catch(err => {
+          this.isFail = true;
+          this.isLoading = false;
           console.log(err, "请求错误");
         });
     }
@@ -62,8 +74,8 @@ export default {
 };
 </script>
 
-<style lang="stylus" scope>
-.loading {
+<style lang="stylus" scoped>
+.loading, .fail {
   text-align: center;
   font-weight: 600;
   font-size: 20px;
@@ -142,8 +154,10 @@ export default {
 .property-summary {
   // white-space: nowrap;
   overflow: hidden;
-  // text-overflow: ellipsis;
-  // display: inline-block;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
   height: 88px;
   line-height: 22px;
   border-top: 1px solid #cccccc;
