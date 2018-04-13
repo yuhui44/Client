@@ -40,18 +40,19 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column prop="_id" label="产权ID" min-width="210">
+      <el-table-column prop="_id" label="产权ID">
       </el-table-column>
-      <el-table-column prop="propertyName" label="产权名" min-width="150">
+      <el-table-column prop="propertyName" label="产权名">
       </el-table-column>
-      <el-table-column prop="publisher._id" label="发布者ID" min-width="210">
+      <el-table-column prop="publisher._id" label="发布者ID">
       </el-table-column>
-      <el-table-column prop="publisher.username" label="发布者用户名" min-width="110">
+      <el-table-column prop="publisher.username" label="发布者用户名">
       </el-table-column>
-      <el-table-column prop="publisher.email" label="发布者邮箱" min-width="170">
+      <el-table-column prop="publisher.email" label="发布者邮箱">
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="50">
+      <el-table-column fixed="right" label="操作" width="90px">
         <template slot-scope="scope">
+          <el-button @click="getWantsInfo2(scope.row)" type="text" size="small">意向</el-button>
           <el-button @click="editPropertyInfo(scope.row)" type="text" size="small">编辑</el-button>
         </template>
       </el-table-column>
@@ -88,6 +89,30 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+    <!-- 查看需求弹窗 -->
+    <el-dialog :title="propertyWantsDialogTitle" :visible.sync="propertyWantsDialogVisible" :append-to-body=true custom-class="property-wants">
+      <el-table :data="propertyWantsInfo" border style="width: 100%">
+        <el-table-column prop="wanter._id" label="意向者ID">
+        </el-table-column>
+        <el-table-column prop="wanter.username" label="用户名">
+        </el-table-column>
+        <el-table-column prop="wanter.email" label="邮箱">
+        </el-table-column>
+        <el-table-column prop="wanter.telephone" label="电话">
+        </el-table-column>
+        <el-table-column prop="wanter.qqNumber" label="QQ号码">
+        </el-table-column>
+        <el-table-column prop="wanter.wechat" label="微信号">
+        </el-table-column>
+        <el-table-column prop="message" label="留言">
+        </el-table-column>
+        <el-table-column label="时间">
+          <template slot-scope="scope">
+            <div class="cell">{{new Date(scope.row.createTime).toLocaleString('chinese',{hour12:false})}}</div>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -96,12 +121,17 @@
 import {
   getAllPropertysInfo,
   getPropertyInfo,
-  postPropertyInfo
+  postPropertyInfo,
+  getWantsInfo
 } from "@/axios/api";
 //导出组件
 export default {
   data() {
     return {
+      propertyWantsInfo: [],
+      propertyWantsDialogVisible: false,
+      propertyWantsDialogTitle: "产权意向信息",
+      propertyWantsInfo: [],
       allPropertysInfo: [],
       propertyInfoForm: {},
       propertyInfoDialogVisible: false,
@@ -169,6 +199,25 @@ export default {
           });
         }
       });
+    },
+    getWantsInfo2(rowInfo) {
+      if (rowInfo) {
+        getWantsInfo({
+          _id: rowInfo._id
+        })
+          .then(res => {
+            console.log(res, "请求成功");
+            if (res.data.wants) {
+              this.propertyWantsInfo = res.data.wants;
+              this.propertyWantsDialogTitle =
+                "产权意向信息（ID：" + rowInfo._id + "）";
+              this.propertyWantsDialogVisible = true;
+            }
+          })
+          .catch(err => {
+            console.log(err, "请求错误");
+          });
+      }
     }
   }
 };
@@ -183,5 +232,18 @@ export default {
   margin-right: 0;
   margin-bottom: 0;
   min-width: 300px;
+}
+</style>
+
+
+<style lang="stylus">
+.property-wants, .property-info {
+  width: 900px;
+}
+
+@media (max-width: 900px) {
+  .property-wants, .property-info {
+    width: 100%;
+  }
 }
 </style>

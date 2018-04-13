@@ -16,6 +16,7 @@
         <p class="property-publish">最后编辑于</p>
         <p class="property-time">{{new Date(property.editTime).toLocaleString('chinese',{hour12:false})}}</p>
         <el-button type="primary" class="property-want" @click="indexWantDialogVisible=true" v-if="!property.isSelt">我有意向</el-button>
+        <el-button type="primary" class="property-want" v-if="property.isSelt" disabled>产权已售出</el-button>
         <div style="clear:both"></div>
       </div>
       <div class="property-detail">
