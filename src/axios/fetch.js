@@ -1,11 +1,13 @@
 import axios from 'axios';//引入axios
 import { Message } from "element-ui";
+import store from '@/store';
+import * as types from '@/store/types'
 
 export default function fetch(options) {
   return new Promise((resolve, reject) => {
     const instance = axios.create({  //instance创建一个axios实例，可以自定义配置，可在 axios文档中查看详情
       //所有的请求都会带上这些配置，比如全局都要用的身份信息等。
-      baseURL: "/",
+      baseURL: "/api",
       timeout: 5 * 1000, // 5秒超时
       // responseType: "json",
       // withCredentials: true,
@@ -88,6 +90,12 @@ export default function fetch(options) {
               message: error.response.data.msg,
               type: 'error'
             });
+            // this.$root.eventHub.$emit('showLogin');
+            // router.replace({
+            //   path: 'login',
+            //   query: {redirect: router.currentRoute.fullPath}
+            // });
+            store.commit(types.DIALOG);
           }
         }
         return Promise.reject(error);

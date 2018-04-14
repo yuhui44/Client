@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p>hhhh</p>
+    <h2 style="text-align: center;">欢迎使用知识产权交易平台！</h2>
+    <p style="line-height: 28px;">　　您可以在我的信息中填写您的手机、QQ号码、微信号，当您发送交易意向时，产权所有者将通过这些信息与您及时取得联系。</p>
   </div>
 </template>
 
@@ -9,24 +10,11 @@
 export default {
   data() {
     return {
-      isCollapse: true
     };
   },
   mounted() {
-    this.isCollapse = document.documentElement.clientWidth < 1000;
-    console.log(this.isCollapse);
-    // const that = this;
-    window.onresize = () => {
-      this.isCollapse = document.documentElement.clientWidth < 1000;
-    };
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    }
   }
 };
 </script>

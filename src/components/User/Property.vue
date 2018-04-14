@@ -32,9 +32,9 @@
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column prop="_id" label="产权ID" min-width="210">
+      <el-table-column prop="_id" label="产权ID">
       </el-table-column>
-      <el-table-column prop="propertyName" label="产权名" min-width="120">
+      <el-table-column prop="propertyName" label="产权名">
       </el-table-column>
       <!-- <el-table-column prop="email" label="邮箱" min-width="200">
       </el-table-column> -->

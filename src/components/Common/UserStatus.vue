@@ -1,5 +1,6 @@
 <template>
   <div class="user-status">
+    <!-- <p>{{loginDialog}}</p> -->
     <el-button size="medium" icon="el-icon-yuhui44-regist" @click="registerDialogVisible=true" v-if="showLoginButton">注册</el-button>
     <el-button size="medium" icon="el-icon-yuhui44-login" @click="loginDialogVisible=true" v-if="showLoginButton">登录</el-button>
     <el-dropdown v-if="showLogoutButton">
@@ -50,6 +51,7 @@
           <el-input v-model="loginForm.password" type="password" placeholder="密码"></el-input>
         </el-form-item>
         <el-form-item>
+          <el-button size="mini" @click="loginToRegister()" style="float: right;">注册</el-button>
           <el-button size="mini" @click="showResetPass()" style="float: right;">忘记密码</el-button>
         </el-form-item>
         <el-form-item>
@@ -73,6 +75,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import {
   userRegister,
   userLogin,
@@ -82,6 +85,12 @@ import {
   resendEmail
 } from "@/axios/api";
 export default {
+  //事件接收
+  created() {
+    this.$root.eventHub.$on('showLogin',(target) => {
+      this.loginDialogVisible = true;
+    });
+  },
   data() {
     //验证注册用户名
     var validataUsername = (rule, value, callback) => {
@@ -151,11 +160,17 @@ export default {
     return {
       registerDialogVisible: false,
       registerForm: {
-        username: "yuhui44",
-        email: "yuhui44@live.cn",
-        password: "ma123456",
-        checkPassword: "ma123456"
+        username: "",
+        email: "",
+        password: "",
+        checkPassword: ""
       },
+      // registerForm: {
+      //   username: "yuhui44",
+      //   email: "yuhui44@live.cn",
+      //   password: "ma123456",
+      //   checkPassword: "ma123456"
+      // },
       registerFormRules: {
         username: [
           { required: true, validator: validataUsername, trigger: "blur" }
@@ -177,9 +192,13 @@ export default {
       },
       loginDialogVisible: false,
       loginForm: {
-        account: "yuhui44",
-        password: "ma123456"
+        account: "",
+        password: ""
       },
+      // loginForm: {
+      //   account: "yuhui44",
+      //   password: "ma123456"
+      // },
       loginFormRules: {
         account: [
           { required: true, validator: validataAccount, trigger: "blur" }
@@ -206,7 +225,18 @@ export default {
   mounted() {
     this.getUserStatus();
   },
+  computed: {
+    ...mapGetters({
+      loginDialog: "loginDialog"
+    })
+  },
+  watch: {
+    loginDialog (val, oldval) {
+      this.loginDialogVisible = true;
+    }
+  },
   methods: {
+    ...mapActions(["setStatus", "removeStatus"]),
     registerSubmit() {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
@@ -265,6 +295,7 @@ export default {
       userLogout()
         .then(res => {
           console.log(res, "请求成功");
+          this.$router.push({ path: "/" });
           this.getUserStatus();
         })
         .catch(err => {
@@ -282,6 +313,7 @@ export default {
           this.username = res.data.username;
           this.showLoginButton = !res.data.isLogin;
           this.showLogoutButton = res.data.isLogin;
+          this.setStatus(res.data);
         })
         .catch(err => {
           console.log(err, "请求错误");
@@ -290,7 +322,7 @@ export default {
     },
     goToUserCenter() {
       this.$router.push({ path: "/user" });
-      console.log("111");
+      // console.log("111");
     },
     showResetPass() {
       this.loginDialogVisible = false;
@@ -314,7 +346,11 @@ export default {
           });
         }
       });
-    }
+    },
+  loginToRegister() {
+    this.loginDialogVisible = false;
+    this.registerDialogVisible = true;
+  }
   }
 };
 </script>

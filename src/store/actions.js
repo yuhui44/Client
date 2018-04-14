@@ -1,21 +1,33 @@
 import * as types from './types.js'
-import { userStatus } from "@/axios/api.js"
+// import { userStatus } from "@/axios/api.js"
 
 export default {
-  UserStatus({ commit }) {
-    return new Promise((resolve, reject) => {
-      userStatus()
-        .then(res => {
-          commit(types.STATUS, {
-            username: res.data.username,
-            isLogin: res.data.isLogin,
-            isAdmin: res.data.isAdmin
-          });
-          resole(res);
-        })
-        .catch(err => {
-          reject(err);
-        });
-    })
-  }
+  setStatus({ commit }, data) {
+    commit(
+      types.STATUS,
+      {
+        username: data.username,
+        isLogin: data.isLogin,
+        isAdmin: data.isAdmin
+      }
+    );
+  },
+  loginDialog({ commit }) {
+    commit(
+      types.DIALOG,
+      {
+        loginDialog: !loginDialog
+      }
+    );
+  },
+  // removeStatus({ commit }) {
+  //   commit(
+  //     types.STATUS,
+  //     {
+  //       username: '',
+  //       isLogin: false,
+  //       isAdmin: false
+  //     }
+  //   );
+  // },
 }

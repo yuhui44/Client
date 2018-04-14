@@ -15,7 +15,7 @@
         <p class="property-time">{{new Date(property.createTime).toLocaleString('chinese',{hour12:false})}}</p>
         <p class="property-publish">最后编辑于</p>
         <p class="property-time">{{new Date(property.editTime).toLocaleString('chinese',{hour12:false})}}</p>
-        <el-button type="primary" class="property-want" @click="indexWantDialogVisible=true" v-if="!property.isSelt">我有意向</el-button>
+        <el-button type="primary" class="property-want" @click="wantProperty()" v-if="!property.isSelt">我有意向</el-button>
         <el-button type="primary" class="property-want" v-if="property.isSelt" disabled>产权已售出</el-button>
         <div style="clear:both"></div>
       </div>
@@ -40,6 +40,7 @@
 
 
 <script>
+import { mapGetters } from "vuex";
 import { getIndexPropertyInfo, postIndexWantInfo } from "@/axios/api";
 //导出组件
 export default {
@@ -54,6 +55,11 @@ export default {
         message: [{ required: true, message: "请填写留言", trigger: "blur" }]
       }
     };
+  },
+  computed: {
+    ...mapGetters({
+      isLogin: "isLogin"
+    })
   },
   mounted() {},
   created() {
@@ -92,6 +98,14 @@ export default {
           });
         }
       });
+    },
+    // 点击我有意向
+    wantProperty() {
+      if ( this.isLogin ) {
+        this.indexWantDialogVisible = true;
+      } else {
+        this.$root.eventHub.$emit('showLogin');
+      }
     }
   }
 };

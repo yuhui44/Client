@@ -7,7 +7,7 @@
     <!-- 产权展示 -->
     <div class="propertys-list" v-if="!isLoading && !isFail">
       <!-- 单个商品 -->
-      <div class="property-box" v-for="property in propertys" :key="property">
+      <div class="property-box" v-for="property in propertys" :key="property.index">
         <div class="property-inbox">
           <div class="property-title">
             <router-link :to="{ path: 'property/' + property._id }" :title="property.propertyName">{{property.propertyName}}</router-link>

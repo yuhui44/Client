@@ -41,15 +41,15 @@
               <i class="el-icon-phone-outline"></i>
               <span slot="title">意向请求</span>
             </el-menu-item>
-            <el-menu-item index="/user/infos">
+            <el-menu-item index="/user/infos" v-if="isAdmin">
               <i class="el-icon-yuhui44-users"></i>
               <span slot="title">所有用户</span>
             </el-menu-item>
-            <el-menu-item index="/user/propertys">
+            <el-menu-item index="/user/propertys" v-if="isAdmin">
               <i class="el-icon-refresh"></i>
               <span slot="title">所有产权</span>
             </el-menu-item>
-            <el-menu-item index="/user/allWants">
+            <el-menu-item index="/user/allWants" v-if="isAdmin">
               <i class="el-icon-more"></i>
               <span slot="title">所有意向</span>
             </el-menu-item>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 //引入用户状态组件
 import UserStatus from "@/components/Common/UserStatus";
 //导出组件
@@ -79,17 +80,23 @@ export default {
   },
   mounted() {
     this.isCollapse = document.documentElement.clientWidth < 1010;
-    console.log(this.isCollapse);
-    // const that = this;
     window.onresize = () => {
       this.isCollapse = document.documentElement.clientWidth < 1010;
     };
   },
   computed: {
+    ...mapGetters({
+      isAdmin: "isAdmin"
+    }),
     activeIndex() {
       return "/" + this.$route.matched[0].path.split("/")[1];
     }
   }
+  // computed: {
+  //   ...mapGetters({
+  //     isLogin: "isLogin"
+  //   })
+  // },
 };
 </script>
 
@@ -167,7 +174,6 @@ export default {
 }
 
 .content-thin {
-
   width: calc(100% - 60px);
   margin-right: 5px;
   // width: 100%;
