@@ -19,7 +19,7 @@
             <p class="property-publish">发表于</p>
             <p class="property-time">{{new Date(property.createTime).toLocaleString('chinese',{hour12:false})}}</p>
           </div>
-          <p class="property-summary">{{property.summary}}</p>
+          <p class="property-summary" style="-webkit-box-orient: vertical;">{{property.summary}}</p>
           <div class="property-go">
             <router-link :to="{ path: 'property/' + property._id }">查看详情
               <i class="el-icon-d-arrow-right"></i>

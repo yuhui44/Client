@@ -46,6 +46,7 @@
         <div class="content">
           <router-view></router-view>
         </div>
+        <div style="clear:both"></div>
       </div>
     </div>
   </div>
@@ -73,9 +74,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
-#showMain {
-  height: 100%;
-}
+// #showMain {
+//   height: 100%;
+// }
 
 #headerWrapper {
   .header {
@@ -93,7 +94,7 @@ export default {
 
 .container {
   width: 1000px;
-  height: 100%;
+  // height: 100%;
   margin: 0 auto;
 }
 
@@ -122,9 +123,9 @@ export default {
   float: right;
 }
 
-#mainContent {
-  height: 100%;
-}
+// #mainContent {
+//   height: 100%;
+// }
 
 .content {
   // height: calc(100% - 100px);
@@ -140,7 +141,7 @@ export default {
 @media (max-width: 1010px) {
   .content {
     margin-left: 5px;
-  width: calc(100% - 50px);
+    width: calc(100% - 50px);
   }
 }
 

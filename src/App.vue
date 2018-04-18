@@ -13,7 +13,7 @@ export default {
 <style lang="stylus">
 
 #app
-  height: 100%;
+  min-height: 100%;
   background-color: #eee;
 
 // <!--这里是对于使用reset.css之后的一些自定义的默认的css初始化-->

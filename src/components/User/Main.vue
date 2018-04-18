@@ -58,6 +58,7 @@
         <div class="content" v-bind:class="{ 'content-thin': isCollapse }">
           <router-view></router-view>
         </div>
+        <div style="clear:both"></div>
       </div>
     </div>
   </div>
@@ -102,9 +103,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
-#showMain {
-  height: 100%;
-}
+// #showMain {
+//   height: 100%;
+// }
 
 #headerWrapper {
   .header {
@@ -122,7 +123,7 @@ export default {
 
 .container {
   width: 1000px;
-  height: 100%;
+  // height: 100%;
   margin: 0 auto;
 }
 
@@ -151,9 +152,9 @@ export default {
   float: right;
 }
 
-#mainContent {
-  height: 100%;
-}
+// #mainContent {
+//   height: 100%;
+// }
 
 #userMenu {
   position: fixed;
