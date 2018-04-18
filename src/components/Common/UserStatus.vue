@@ -87,7 +87,7 @@ import {
 export default {
   //事件接收
   created() {
-    this.$root.eventHub.$on('showLogin',(target) => {
+    this.$root.eventHub.$on("showLogin", target => {
       this.loginDialogVisible = true;
     });
   },
@@ -180,7 +180,7 @@ export default {
           {
             type: "email",
             message: "请输入正确的邮箱地址",
-            trigger: "blur,change"
+            trigger: "blur"
           }
         ],
         password: [
@@ -231,7 +231,7 @@ export default {
     })
   },
   watch: {
-    loginDialog (val, oldval) {
+    loginDialog(val, oldval) {
       this.loginDialogVisible = true;
     }
   },
@@ -347,10 +347,10 @@ export default {
         }
       });
     },
-  loginToRegister() {
-    this.loginDialogVisible = false;
-    this.registerDialogVisible = true;
-  }
+    loginToRegister() {
+      this.loginDialogVisible = false;
+      this.registerDialogVisible = true;
+    }
   }
 };
 </script>

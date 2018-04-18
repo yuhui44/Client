@@ -19,7 +19,7 @@
             <p class="property-publish">发表于</p>
             <p class="property-time">{{new Date(property.createTime).toLocaleString('chinese',{hour12:false})}}</p>
           </div>
-          <p class="property-summary" style="-webkit-box-orient: vertical;">{{property.summary}}</p>
+          <p class="property-summary">{{property.summary}}</p>
           <div class="property-go">
             <router-link :to="{ path: 'property/' + property._id }">查看详情
               <i class="el-icon-d-arrow-right"></i>
@@ -73,6 +73,25 @@ export default {
   }
 };
 </script>
+
+<style>
+
+.property-summary {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  /* autoprefixer: off */
+  -webkit-box-orient: vertical;
+  /* autoprefixer: on */
+  height: 88px;
+  line-height: 22px;
+  border-top: 1px solid #cccccc;
+  padding-top: 10px;
+}
+
+</style>
+
 
 <style lang="stylus" scoped>
 .loading, .fail {
@@ -149,19 +168,6 @@ export default {
 
 .property-time {
   display: inline-block;
-}
-
-.property-summary {
-  // white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  height: 88px;
-  line-height: 22px;
-  border-top: 1px solid #cccccc;
-  padding-top: 10px;
 }
 
 .property-go {

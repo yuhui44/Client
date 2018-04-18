@@ -129,7 +129,7 @@ export default {
           {
             type: "email",
             message: "请输入正确的邮箱地址",
-            trigger: "blur,change"
+            trigger: "blur"
           }
         ]
       }
@@ -156,17 +156,26 @@ export default {
       this.userInfoDialogVisible = true;
     },
     postUserInfo2() {
-      postUserInfo(this.userInfoForm)
-        .then(res => {
-          console.log(res, "请求成功");
-          this.userInfoDialogVisible = false;
-          this.userInfoForm = {};
-          this.getUsersInfo2();
-        })
-        .catch(err => {
-          console.log(err, "请求错误");
-        });
-    },
+      this.$refs.userInfoForm.validate(valid => {
+        if (valid) {
+          postUserInfo(this.userInfoForm)
+            .then(res => {
+              console.log(res, "请求成功");
+              this.userInfoDialogVisible = false;
+              this.userInfoForm = {};
+              this.getUsersInfo2();
+            })
+            .catch(err => {
+              console.log(err, "请求错误");
+            });
+        } else {
+          this.$message({
+            message: "请正确填写用户信息！",
+            type: "error"
+          });
+        }
+      });
+    }
   }
 };
 </script>
